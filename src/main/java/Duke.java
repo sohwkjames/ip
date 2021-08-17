@@ -1,10 +1,14 @@
 public class Duke {
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
+        Greeter greeter = new Greeter();
+        Operations operations = new Operations();
+        Interactor interactor = new Interactor();
+        interactor.setOperations(operations);
+
+        greeter.printGreeting();
+        interactor.start("bye");
+        greeter.printGoodbye();
+
+
     }
 }
