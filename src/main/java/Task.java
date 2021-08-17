@@ -14,6 +14,13 @@ public class Task {
         isDone = done;
     }
 
+    public void toggleDone(){
+        if (this.isDone){
+            this.isDone = false;
+        }
+        else{this.isDone = true;}
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -24,6 +31,19 @@ public class Task {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getFormattedString(){
+        // prints a task in the "[x]: get milk" format
+        String doneIndicator;
+        if(this.isDone){
+            doneIndicator = "x";
+        }
+        else{
+            doneIndicator = " ";
+        }
+        return String.format("[%s]: %s", doneIndicator, this.getDescription());
+
     }
 
 }

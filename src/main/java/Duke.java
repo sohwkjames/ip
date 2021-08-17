@@ -9,7 +9,10 @@ public class Duke {
 
         operations.setDatabase(taskList);
         interactor.setOperations(operations);
+
         interactor.setExitKeyword("bye");
+        interactor.setDoneKeyword("done");
+
         interactor.start();
     }
 }

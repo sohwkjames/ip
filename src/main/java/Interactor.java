@@ -3,7 +3,10 @@ import java.util.Scanner;
 public class Interactor {
 
     Operations operations;
-    String exitKeyword;
+    String exitKeyword = "";
+
+
+    String doneKeyword = "";
 
     public Interactor() {
     }
@@ -14,6 +17,10 @@ public class Interactor {
 
     public void setExitKeyword(String exitKeyword){
         this.exitKeyword = exitKeyword;
+    }
+
+    public void setDoneKeyword(String doneKeyword) {
+        this.doneKeyword = doneKeyword;
     }
 
 
@@ -27,13 +34,54 @@ public class Interactor {
 
         while (toContinue == true){
             String currentInput = scanner.nextLine();
+
             if (currentInput.equals(this.exitKeyword)){
                 this.printGoodbye();
                 break;
             }
-            operations.addTaskToDatabase(currentInput);
-            operations.printDatabase();
+            if (currentInput.equals("list")){
+                operations.printDatabase();
+                break;
+            }
+            // When user toggles done-ness of task
+            if (beginsWith(currentInput, this.doneKeyword)){
+                int i = getNumberFromInput(currentInput);
+                operations.setDone(i);
+                operations.printDatabase();
+
+            }
+            else{
+                operations.addTaskToDatabase(currentInput);
+                operations.printDatabase();
+            }
+
+
+            // Default case: add item to list
+
+
+//            operations.addTaskToDatabase(currentInput);
+//            operations.printDatabase();
         }
+    }
+
+    private int getNumberFromInput(String currentInput) {
+        // takes: "someLongString 4". returns: 4
+        String [] arr = currentInput.split(" ", 0);
+        return Integer.parseInt(arr[1]);
+    }
+
+    private static boolean beginsWith(String longerString, String shorterString) {
+        if (shorterString.length() > longerString.length()){
+            return false;
+        }
+        // returns true if longerString begins with shorterString
+        // beginsWith("done 4", "done") should return True.
+        int length = shorterString.length();
+        String slicedString = longerString.substring(0, length);
+        if (slicedString.equals(shorterString)){
+            return true;
+        }
+        else {return false;}
     }
 
     private void printExitKeyword() {

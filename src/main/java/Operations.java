@@ -27,7 +27,15 @@ public class Operations {
 
     public void printDatabase(){
         for(int i=0; i < database.size(); i++){
-            System.out.println(i +  " " + database.getTaskDescription(i));
+            System.out.println(i +  ": " + database.getTask(i).getFormattedString());
         }
+    }
+
+    public Task getTask(int i){
+        return database.getTask(i);
+    }
+
+    public void setDone(int i) {
+        getTask(i).toggleDone();
     }
 }
