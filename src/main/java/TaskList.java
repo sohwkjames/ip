@@ -9,6 +9,7 @@ public class TaskList {
 
     public boolean addTask(Task task){
         this.tasks.add(task);
+
         return true;
     }
 
@@ -16,7 +17,16 @@ public class TaskList {
         return tasks;
     }
 
-    public void printAllTasks(){
-        System.out.println(this.tasks);
+    public Task getTask(int i){
+        return tasks.get(i);
+    }
+
+    public String getTaskDescription(int i){
+        return tasks.get(i).getDescription();
+
+    }
+
+    public int size() {
+        return tasks.size();
     }
 }

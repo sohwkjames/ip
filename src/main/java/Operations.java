@@ -1,5 +1,7 @@
 public class Operations {
+
     TaskList database;
+
     public Operations(){
 
     }
@@ -14,7 +16,7 @@ public class Operations {
 
     public boolean addTaskToDatabase(String message) {
         Task task = stringToTask(message);
-        database.addTask(task);
+        this.database.addTask(task);
         return true;
     }
 
@@ -24,6 +26,8 @@ public class Operations {
     }
 
     public void printDatabase(){
-        System.out.println(database);
+        for(int i=0; i < database.size(); i++){
+            System.out.println(i +  " " + database.getTaskDescription(i));
+        }
     }
 }
