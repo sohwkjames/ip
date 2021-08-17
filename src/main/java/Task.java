@@ -1,6 +1,7 @@
 public class Task {
     boolean isDone;
     String description;
+    String symbol;
 
     public Task() {
     }

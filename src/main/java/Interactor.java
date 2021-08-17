@@ -1,15 +1,16 @@
 import java.util.Scanner;
+import java.util.HashMap;
 
 public class Interactor {
 
     Operations operations;
-    String exitKeyword = "";
+    private String exitKeyword = "";
+    private String doneKeyword = "";
+    private String todoKeyword = "todo";
+    private String eventKeyword = "event";
+    private String deadlineKeyword = "deadline";
 
-
-    String doneKeyword = "";
-
-    public Interactor() {
-    }
+    public Interactor() {}
 
     public void setOperations(Operations operations) {
         this.operations = operations;
@@ -25,18 +26,18 @@ public class Interactor {
 
 
     public void start(){
-        this.printGreeting();
-        this.printExitKeyword();
+        printGreeting();
+        printExitKeyword();
 
         boolean toContinue = true;
 
         Scanner scanner = new Scanner(System.in);
 
-        while (toContinue == true){
+        while (true){
             String currentInput = scanner.nextLine();
 
-            if (currentInput.equals(this.exitKeyword)){
-                this.printGoodbye();
+            if (currentInput.equals(exitKeyword)){
+                printGoodbye();
                 break;
             }
             if (currentInput.equals("list")){
@@ -44,25 +45,52 @@ public class Interactor {
                 break;
             }
             // When user toggles done-ness of task
-            if (beginsWith(currentInput, this.doneKeyword)){
+            if (beginsWith(currentInput, doneKeyword)){
                 int i = getNumberFromInput(currentInput);
                 operations.setDone(i);
                 operations.printDatabase();
-
             }
+
+            //*** check for Todo, deadline, event creations ***
+            if (beginsWith(currentInput, todoKeyword)){
+                Todo todo = handleTodoCreation(currentInput);
+                operations.addToDatabase(todo);
+            }
+
+            if (beginsWith(currentInput, deadlineKeyword)){
+                Deadline deadline = handleDeadlineCreation(currentInput);
+                operations.addToDatabase(deadline);
+            }
+
+//            if (beginsWith(currentInput, this.eventKeyword)){
+//                Event event = handleEventCreation(currentInput);
+//                operations.addToDatabase(event);
+//            }
+
             else{
-                operations.addTaskToDatabase(currentInput);
+                System.out.println("Pls enter a proper command");
                 operations.printDatabase();
             }
-
-
-            // Default case: add item to list
-
-
-//            operations.addTaskToDatabase(currentInput);
-//            operations.printDatabase();
         }
     }
+
+    private Todo handleTodoCreation(String currentInput) {
+        // currentInput in the form "todo borrow book"
+        String [] arr = currentInput.split(" ", 2); // 2 indicates we expect 2 values in array
+        String description = arr[1];
+        return new Todo(description);
+    }
+
+    private Deadline handleDeadlineCreation(String currentInput) {
+        String [] arr = currentInput.split(" ", 2); // 2 indicates we expect 2 values in array
+        String [] splitArr = arr[1].split("/", 0);
+        String description = splitArr[0];
+        String endTime = splitArr[1];
+        return new Deadline(false, description, endTime);
+    }
+
+//    private Event handleEventCreation(String currentInput) {
+//    }
 
     private int getNumberFromInput(String currentInput) {
         // takes: "someLongString 4". returns: 4

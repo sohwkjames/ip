@@ -2,27 +2,30 @@ public class Operations {
 
     TaskList database;
 
-    public Operations(){
+    public Operations(){}
 
+    public void setDatabase(TaskList database) {
+        this.database = database;
     }
 
     public TaskList getDatabase() {
         return database;
     }
 
-    public void setDatabase(TaskList database) {
-        this.database = database;
-    }
-
-    public boolean addTaskToDatabase(String message) {
-        Task task = stringToTask(message);
+    public void addToDatabase(Task task) {
         this.database.addTask(task);
-        return true;
     }
 
-    public Task stringToTask(String message) {
-        Task task = new Task(false, message);
-        return task;
+    public void addToDatabase(Todo todo) {
+        this.database.addTask(todo);
+    }
+
+    public void addToDatabase(Event event) {
+        this.database.addTask(event);
+    }
+
+    public void addToDatabase(Deadline deadline) {
+        this.database.addTask(deadline);
     }
 
     public void printDatabase(){
