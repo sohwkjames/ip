@@ -22,4 +22,15 @@ public class Deadline extends Task{
     public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
+
+    @Override
+    public String toString(){
+        String doneSymbol = "[ ]";
+        if(isDone){
+            doneSymbol = "[x]";
+        }
+        String message = doneSymbol + ": " + symbol + " " +  description + " (at: " + endTime +  ")";
+        return message;
+    }
+
 }

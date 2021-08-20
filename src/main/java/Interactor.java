@@ -40,57 +40,69 @@ public class Interactor {
                 printGoodbye();
                 break;
             }
-            if (currentInput.equals("list")){
+            else if (currentInput.equals("list")){
                 operations.printDatabase();
-                break;
             }
             // When user toggles done-ness of task
-            if (beginsWith(currentInput, doneKeyword)){
+            else if (beginsWith(currentInput, doneKeyword)){
                 int i = getNumberFromInput(currentInput);
                 operations.setDone(i);
-                operations.printDatabase();
             }
 
             //*** check for Todo, deadline, event creations ***
-            if (beginsWith(currentInput, todoKeyword)){
+            else if (beginsWith(currentInput, todoKeyword)){
                 Todo todo = handleTodoCreation(currentInput);
                 operations.addToDatabase(todo);
+                printTaskAddedMessage(todo);
             }
 
-            if (beginsWith(currentInput, deadlineKeyword)){
+            else if (beginsWith(currentInput, deadlineKeyword)){
                 Deadline deadline = handleDeadlineCreation(currentInput);
                 operations.addToDatabase(deadline);
+                printTaskAddedMessage(deadline);
             }
 
-//            if (beginsWith(currentInput, this.eventKeyword)){
-//                Event event = handleEventCreation(currentInput);
-//                operations.addToDatabase(event);
-//            }
+            else if (beginsWith(currentInput, eventKeyword)){
+                Event event = handleEventCreation(currentInput);
+                operations.addToDatabase(event);
+                printTaskAddedMessage(event);
+            }
 
             else{
                 System.out.println("Pls enter a proper command");
-                operations.printDatabase();
             }
+            // Print the database
+
         }
     }
 
     private Todo handleTodoCreation(String currentInput) {
         // currentInput in the form "todo borrow book"
+
         String [] arr = currentInput.split(" ", 2); // 2 indicates we expect 2 values in array
         String description = arr[1];
         return new Todo(description);
     }
 
     private Deadline handleDeadlineCreation(String currentInput) {
+        // currentInput in the shape of: "deadline return book /by Sunday"
         String [] arr = currentInput.split(" ", 2); // 2 indicates we expect 2 values in array
-        String [] splitArr = arr[1].split("/", 0);
+        String [] splitArr = arr[1].split("/by", 0);
         String description = splitArr[0];
         String endTime = splitArr[1];
         return new Deadline(false, description, endTime);
     }
 
-//    private Event handleEventCreation(String currentInput) {
-//    }
+    private Event handleEventCreation(String currentInput) {
+        // currentInput in the shape of: "event project meeting /at Mon 2-4pm"
+        String [] arr = currentInput.split(" ",2);
+        String [] splitArr = arr[1].split("/at");
+        String description = splitArr[0];
+        String [] times = splitArr[1].split("-");
+        String startTime = times[0];
+        String endTime = times[1];
+        return new Event(false, description, endTime, startTime);
+    }
 
     private int getNumberFromInput(String currentInput) {
         // takes: "someLongString 4". returns: 4
@@ -125,4 +137,7 @@ public class Interactor {
         System.out.println("Okay bye");
     }
 
+    private void printTaskAddedMessage(Task task){
+        System.out.println("You have added: " + task);
+    }
 }

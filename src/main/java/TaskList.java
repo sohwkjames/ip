@@ -9,7 +9,6 @@ public class TaskList {
 
     public boolean addTask(Task task){
         this.tasks.add(task);
-
         return true;
     }
 

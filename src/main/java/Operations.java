@@ -13,6 +13,7 @@ public class Operations {
     }
 
     public void addToDatabase(Task task) {
+
         this.database.addTask(task);
     }
 
@@ -24,13 +25,11 @@ public class Operations {
         this.database.addTask(event);
     }
 
-    public void addToDatabase(Deadline deadline) {
-        this.database.addTask(deadline);
-    }
+    public void addToDatabase(Deadline deadline) {this.database.addTask(deadline);}
 
     public void printDatabase(){
         for(int i=0; i < database.size(); i++){
-            System.out.println(i +  ": " + database.getTask(i).getFormattedString());
+            System.out.println(i +  ": " + database.getTask(i));
         }
     }
 

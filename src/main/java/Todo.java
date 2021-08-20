@@ -12,4 +12,14 @@ public class Todo extends Task{
     public Todo(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString(){
+        String doneSymbol = "[ ]";
+        if(isDone){
+            doneSymbol = "[x]";
+        }
+        String message = doneSymbol + ": " + symbol + " " +  description;
+        return message;
+    }
 }
