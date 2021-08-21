@@ -1,0 +1,4 @@
+todo borrow book
+event visit home /at 4 - 19
+list
+bye
