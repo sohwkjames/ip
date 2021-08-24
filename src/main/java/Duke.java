@@ -1,7 +1,9 @@
+import exceptions.DukeException;
+
 import java.util.ArrayList;
 
 public class Duke {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DukeException {
 
         Operations operations = new Operations();
         Interactor interactor = new Interactor();

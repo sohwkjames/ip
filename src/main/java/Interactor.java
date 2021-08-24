@@ -1,5 +1,8 @@
+import exceptions.DukeEmptyListException;
+import exceptions.DukeException;
+import exceptions.NoSuchCommandException;
+
 import java.util.Scanner;
-import java.util.HashMap;
 
 public class Interactor {
 
@@ -25,7 +28,7 @@ public class Interactor {
     }
 
 
-    public void start(){
+    public void start() throws DukeException {
         printGreeting();
         printExitKeyword();
 
@@ -33,47 +36,53 @@ public class Interactor {
 
         Scanner scanner = new Scanner(System.in);
 
-        while (true){
-            String currentInput = scanner.nextLine();
+        do {
+            try {
+                String currentInput = scanner.nextLine();
 
-            if (currentInput.equals(exitKeyword)){
-                printGoodbye();
-                break;
+
+                if (currentInput.equals(exitKeyword)) {
+                    printGoodbye();
+                    break;
+                } else if (currentInput.equals("list")) {
+                    operations.printDatabase();
+                }
+                // When user toggles done-ness of task
+                else if (beginsWith(currentInput, doneKeyword)) {
+                    int i = getNumberFromInput(currentInput);
+                    operations.setDone(i);
+                }
+
+                //*** check for Todo, deadline, event creations ***
+                else if (beginsWith(currentInput, todoKeyword)) {
+                    Todo todo = handleTodoCreation(currentInput);
+                    operations.addToDatabase(todo);
+                    printTaskAddedMessage(todo);
+                } else if (beginsWith(currentInput, deadlineKeyword)) {
+                    Deadline deadline = handleDeadlineCreation(currentInput);
+                    operations.addToDatabase(deadline);
+                    printTaskAddedMessage(deadline);
+                } else if (beginsWith(currentInput, eventKeyword)) {
+                    Event event = handleEventCreation(currentInput);
+                    operations.addToDatabase(event);
+                    printTaskAddedMessage(event);
+                } else {
+
+                    throw new NoSuchCommandException("Please enter a proper command");
+                }
             }
-            else if (currentInput.equals("list")){
-                operations.printDatabase();
+            catch (NoSuchCommandException e) {
+                e.getMessage();
+                System.out.println("No such command. Please enter a proper command.");
             }
-            // When user toggles done-ness of task
-            else if (beginsWith(currentInput, doneKeyword)){
-                int i = getNumberFromInput(currentInput);
-                operations.setDone(i);
+            catch(DukeEmptyListException e){
+                e.getMessage();
+                System.out.println("Our list is currently empty. Please add something to the list first.");
             }
 
-            //*** check for Todo, deadline, event creations ***
-            else if (beginsWith(currentInput, todoKeyword)){
-                Todo todo = handleTodoCreation(currentInput);
-                operations.addToDatabase(todo);
-                printTaskAddedMessage(todo);
-            }
-
-            else if (beginsWith(currentInput, deadlineKeyword)){
-                Deadline deadline = handleDeadlineCreation(currentInput);
-                operations.addToDatabase(deadline);
-                printTaskAddedMessage(deadline);
-            }
-
-            else if (beginsWith(currentInput, eventKeyword)){
-                Event event = handleEventCreation(currentInput);
-                operations.addToDatabase(event);
-                printTaskAddedMessage(event);
-            }
-
-            else{
-                System.out.println("Pls enter a proper command");
-            }
             // Print the database
 
-        }
+        } while (true);
     }
 
     private Todo handleTodoCreation(String currentInput) {
