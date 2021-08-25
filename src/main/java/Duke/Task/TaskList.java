@@ -22,6 +22,10 @@ public class TaskList {
         return tasks.get(i);
     }
 
+    public void deleteTask(int i) {
+        tasks.remove(i);
+    }
+
     public String getTaskDescription(int i){
         return tasks.get(i).getDescription();
 

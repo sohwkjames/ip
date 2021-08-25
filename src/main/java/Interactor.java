@@ -16,6 +16,7 @@ public class Interactor {
     private String todoKeyword = "todo";
     private String eventKeyword = "event";
     private String deadlineKeyword = "deadline";
+    private String deleteKeyword = "delete";
 
     public Interactor() {}
 
@@ -57,21 +58,30 @@ public class Interactor {
                     operations.setDone(i);
                 }
 
+                // handle user delete item
+                else if (beginsWith(currentInput, deleteKeyword)) {
+                    int i = getNumberFromInput(currentInput);
+                    operations.deleteFromDatabase(i);
+                    System.out.println("Deleted successfully " + i);
+                }
+
                 //*** check for Duke.Task.Todo, deadline, event creations ***
                 else if (beginsWith(currentInput, todoKeyword)) {
                     Todo todo = handleTodoCreation(currentInput);
                     operations.addToDatabase(todo);
                     printTaskAddedMessage(todo);
+
                 } else if (beginsWith(currentInput, deadlineKeyword)) {
                     Deadline deadline = handleDeadlineCreation(currentInput);
                     operations.addToDatabase(deadline);
                     printTaskAddedMessage(deadline);
+
                 } else if (beginsWith(currentInput, eventKeyword)) {
                     Event event = handleEventCreation(currentInput);
                     operations.addToDatabase(event);
                     printTaskAddedMessage(event);
-                } else {
 
+                } else {
                     throw new NoSuchCommandException("Please enter a proper command");
                 }
             }
@@ -83,9 +93,10 @@ public class Interactor {
                 e.getMessage();
                 System.out.println("Our list is currently empty. Please add something to the list first.");
             }
-
-            // Print the database
-
+            catch(IndexOutOfBoundsException e){
+                e.getMessage();
+                System.out.println("You have tried to delete or done an item not in the list. Please choose a number from the list.");
+            }
         } while (true);
     }
 
