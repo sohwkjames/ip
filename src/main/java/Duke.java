@@ -1,4 +1,6 @@
-import exceptions.DukeException;
+import Duke.Task.Task;
+import Duke.Task.TaskList;
+import Duke.exceptions.DukeException;
 
 import java.util.ArrayList;
 

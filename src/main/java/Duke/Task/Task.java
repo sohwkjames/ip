@@ -1,3 +1,5 @@
+package Duke.Task;
+
 public abstract class Task {
     boolean isDone;
     String description;

@@ -1,5 +1,5 @@
-import exceptions.DukeEmptyListException;
-import exceptions.NoSuchCommandException;
+import Duke.Task.*;
+import Duke.exceptions.DukeEmptyListException;
 
 public class Operations {
 

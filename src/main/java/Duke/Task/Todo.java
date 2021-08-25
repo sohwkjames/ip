@@ -1,3 +1,5 @@
+package Duke.Task;
+
 public class Todo extends Task{
     String description;
     String symbol = "[T]";

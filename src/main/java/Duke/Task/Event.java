@@ -1,3 +1,5 @@
+package Duke.Task;
+
 public class Event extends Deadline{
     String symbol = "[E]";
     String startTime = "";
