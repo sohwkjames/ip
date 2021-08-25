@@ -1,3 +1,5 @@
+package Duke.Task;
+
 public class Deadline extends Task{
     String symbol = "[D]";
     String endTime;

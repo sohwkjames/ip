@@ -1,6 +1,10 @@
-import exceptions.DukeEmptyListException;
-import exceptions.DukeException;
-import exceptions.NoSuchCommandException;
+import Duke.Task.Deadline;
+import Duke.Task.Event;
+import Duke.Task.Task;
+import Duke.Task.Todo;
+import Duke.exceptions.DukeEmptyListException;
+import Duke.exceptions.DukeException;
+import Duke.exceptions.NoSuchCommandException;
 
 import java.util.Scanner;
 
@@ -53,7 +57,7 @@ public class Interactor {
                     operations.setDone(i);
                 }
 
-                //*** check for Todo, deadline, event creations ***
+                //*** check for Duke.Task.Todo, deadline, event creations ***
                 else if (beginsWith(currentInput, todoKeyword)) {
                     Todo todo = handleTodoCreation(currentInput);
                     operations.addToDatabase(todo);
