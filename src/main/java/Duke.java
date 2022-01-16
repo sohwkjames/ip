@@ -10,8 +10,7 @@ public class Duke {
         Operations operations = new Operations();
         Interactor interactor = new Interactor();
         TaskList taskList = new TaskList(new ArrayList<Task>());
-
-        console.log('Test');
+      // test
         
         operations.setDatabase(taskList);
         interactor.setOperations(operations);
