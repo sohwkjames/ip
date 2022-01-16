@@ -11,6 +11,8 @@ public class Duke {
         Interactor interactor = new Interactor();
         TaskList taskList = new TaskList(new ArrayList<Task>());
 
+        console.log('Test');
+        
         operations.setDatabase(taskList);
         interactor.setOperations(operations);
 
